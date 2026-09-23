@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task & Note Tracker</title>
+  <link rel="stylesheet" href="tracker.css">
+</head>
+<body class="theme-wireframe">
+
+  <!-- Top Navigation Bar -->
+  <div class="top-bar">
+    <div class="nav-controls">
+      <button class="top-btn" onclick="openNewTaskModal()">+ New Task</button>
+      <button class="top-btn" onclick="openNewNoteModal()">+ Create New Task Note</button>
+      <button class="top-btn highlight" onclick="markCurrentTaskComplete()">Mark Completed</button>
+    </div>
+    <div class="user-controls">
+      <select id="themeSelect" class="theme-dropdown" onchange="changeTheme(this.value)">
+        <option value="wireframe">Wireframe</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="sunset">Sunset</option>
+      </select>
+      <span id="userBadge" class="user-badge">User</span>
+      <a href="#" class="logout-link" onclick="handleLogout(event)">Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Sidebar Task Navigation -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>Tasks</h2>
+      </div>
+      <ul id="taskList" class="task-list">
+        <!-- Dynamic task list items populated via tracker.js -->
+      </ul>
+    </div>
+
+    <!-- Workspace Area for Notes & Visual Canvas -->
+    <div class="content-area">
+      <div class="active-task-header">
+        <h1 id="activeTaskTitle">Select a Task</h1>
+        <p id="activeTaskStatus"></p>
+      </div>
+      <div id="notesContainer" class="notes-grid">
+        <!-- SVG connections line-layer and note cards render here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK Compatibility Libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- Application Configuration & Logic Scripts -->
+  <script src="firebase-config.js"></script>
+  <script src="tracker.js"></script>
+  <script>
+    // Function to apply and store selected theme
+  function changeTheme(themeName) {
+    document.body.className = 'theme-' + themeName;
+    localStorage.setItem('selectedTheme', themeName);
+  }
+
+  // Load saved theme on page startup
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('selectedTheme') || 'wireframe';
+    document.body.className = 'theme-' + savedTheme;
+    
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) {
+      themeSelect.value = savedTheme;
+    }
+  });
+  </script>
+</body>
+</html>

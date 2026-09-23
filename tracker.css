@@ -1,0 +1,521 @@
+/* ==========================================================================
+   Theme Definitions
+   ========================================================================== */
+
+/* Wireframe Sketch Theme (Default) */
+body.theme-wireframe {
+  --bg-color: #ffffff;
+  --topbar-bg: #ffffff;
+  --sidebar-bg: #ffffff;
+  --card-bg: #ffffff;
+  --text-color: #000000;
+  --border-thick: 5px solid #000000;
+  --card-border: 6px solid #000000;
+  --note-radius: 25px;
+}
+
+/* Modern Light Theme */
+body.theme-light {
+  --bg-color: #f8fafc;
+  --topbar-bg: #ffffff;
+  --sidebar-bg: #ffffff;
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --border-thick: 2px solid #e2e8f0;
+  --card-border: 2px solid #cbd5e1;
+  --note-radius: 16px;
+}
+
+/* Dark Theme */
+body.theme-dark {
+  --bg-color: #0f172a;
+  --topbar-bg: #1e293b;
+  --sidebar-bg: #1e293b;
+  --card-bg: #334155;
+  --text-color: #f8fafc;
+  --border-thick: 2px solid #475569;
+  --card-border: 2px solid #475569;
+  --note-radius: 16px;
+}
+
+/* Sunset Theme */
+body.theme-sunset {
+  --bg-color: #fff7ed;
+  --topbar-bg: #ffedd5;
+  --sidebar-bg: #ffedd5;
+  --card-bg: #ffffff;
+  --text-color: #431407;
+  --border-thick: 3px solid #ea580c;
+  --card-border: 3px solid #f97316;
+  --note-radius: 20px;
+}
+
+/* ==========================================================================
+   Global & Layout Styles
+   ========================================================================== */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Navigation Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--topbar-bg);
+  border-bottom: var(--border-thick);
+  z-index: 10;
+}
+
+.nav-controls {
+  display: flex;
+  gap: 15px;
+}
+
+.top-btn {
+  background: #ffffff;
+  color: #000000;
+  border: 3px solid #000000;
+  font-weight: bold;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.top-btn.draggable-btn {
+  cursor: grab;
+}
+
+.top-btn.draggable-btn:active {
+  cursor: grabbing;
+}
+
+.top-btn.highlight {
+  background: #22c55e;
+  color: #ffffff;
+}
+
+.user-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-dropdown {
+  padding: 8px 12px;
+  font-weight: bold;
+  border: 3px solid #000;
+  border-radius: 8px;
+}
+
+.user-badge {
+  font-weight: bold;
+  padding: 4px 8px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  color: #000;
+}
+
+.logout-link {
+  color: var(--text-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Main Layout Grid */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Sidebar & Task List
+   ========================================================================== */
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  border-right: var(--border-thick);
+  padding: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 0 20px 15px 20px;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.task-item {
+  width: 100%;
+  padding: 15px 20px;
+  border-top: 3px solid #000;
+  border-bottom: 3px solid #000;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  margin-bottom: -3px;
+  cursor: grab;
+  font-weight: bold;
+  background: #fff;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.task-item.active {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.task-item.dragging {
+  opacity: 0.4;
+  background: #e2e8f0;
+}
+
+.task-item.completed {
+  background: #f8fafc;
+  color: #64748b;
+  text-decoration: line-through;
+  opacity: 0.75;
+}
+
+.task-drag-handle {
+  font-weight: bold;
+  opacity: 0.5;
+  cursor: grab;
+}
+
+.task-title-text {
+  flex: 1;
+}
+
+/* Back Button in Sidebar Header */
+.back-btn {
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000;
+  font-weight: bold;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.15s ease;
+}
+
+.back-btn:hover {
+  background: #e2e8f0;
+}
+
+/* Pinned Folder Button at Bottom of Left Bar */
+.finished-tasks-folder-btn {
+  margin-top: auto;
+  padding: 15px 20px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  background: #f1f5f9;
+  color: #334155;
+  border-top: 4px solid #000;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.finished-tasks-folder-btn:hover {
+  background: #e2e8f0;
+}
+
+/* Empty Tasks Message */
+.empty-tasks-msg {
+  padding: 20px;
+  color: #64748b;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Workspace & Interactive Canvas
+   ========================================================================== */
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.active-task-header {
+  text-align: center;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.notes-grid {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 600px;
+}
+
+/* SVG Line Connections Layer */
+.connections-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.connections-svg line {
+  stroke: #000000;
+  stroke-width: 5px;
+  stroke-linecap: round;
+  pointer-events: stroke;
+  cursor: pointer;
+  transition: stroke 0.15s, stroke-width 0.15s;
+}
+
+.connections-svg line:hover {
+  stroke: #ef4444;
+  stroke-width: 8px;
+}
+
+/* Resizable & Draggable Task Notes */
+.note-card {
+  position: absolute;
+  width: 300px;
+  height: 120px;
+  min-width: 160px;
+  min-height: 80px;
+  resize: both;
+  overflow: auto;
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--note-radius);
+  padding: 25px 20px 20px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  z-index: 2;
+  transition: outline 0.15s ease;
+}
+
+.note-card span {
+  pointer-events: none;
+}
+
+.note-card:active {
+  cursor: grabbing;
+  z-index: 1000 !important;
+}
+
+.note-card.connect-selected {
+  outline: 5px dashed #8b5cf6;
+  outline-offset: 4px;
+}
+
+/* Action Buttons inside Note */
+.note-actions {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+  z-index: 10;
+}
+
+.note-card:hover .note-actions,
+.note-card.connect-selected .note-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.1s;
+}
+
+.action-btn:hover {
+  transform: scale(1.15);
+}
+
+.action-btn.connect-btn {
+  background: #8b5cf6;
+}
+
+.action-btn.connect-btn.active {
+  background: #6d28d9;
+  transform: scale(1.15);
+}
+
+.action-btn.rename-btn {
+  background: #3b82f6;
+}
+
+.action-btn.delete-btn {
+  background: #ef4444;
+}
+
+/* ==========================================================================
+   Custom Typing Modal Popup
+   ========================================================================== */
+
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.custom-modal-box {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--note-radius);
+  padding: 24px;
+  width: 360px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.custom-modal-box h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-color);
+}
+
+.custom-modal-box input {
+  padding: 12px;
+  border: 3px solid #000;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+}
+
+.custom-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-btn {
+  padding: 8px 16px;
+  font-weight: bold;
+  border: 3px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.modal-btn.cancel-btn {
+  background: #e2e8f0;
+  color: #000;
+}
+
+.modal-btn.confirm-btn {
+  background: #22c55e;
+  color: #fff;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #ef4444;
+  border: 2px solid #000000;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.delete-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.task-item-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.rename-task-btn,
+.delete-task-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  padding: 2px 4px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.rename-task-btn:hover,
+.delete-task-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}

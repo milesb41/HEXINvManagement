@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEX INv Dashboard</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .dashboard-container {
+            background-color: #313244;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            text-align: center;
+            width: 400px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .menu-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #89b4fa;
+            color: #11111b;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .menu-btn:hover {
+            background-color: #74c7ec;
+        }
+
+        .logout-btn {
+            background-color: #f38ba8;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: #eba0ac;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h2>Welcome, <span id="userNameDisplay">User</span>!</h2>
+        
+        <!-- Button linking to the Tracker app -->
+        <button class="menu-btn" onclick="window.location.href='tracker.html'">📝 Task Tracker</button>
+        
+        <!-- Placeholder for future apps -->
+        <button class="menu-btn" onclick="alert('More tools coming soon!')">⚙️ System Settings</button>
+
+        <!-- Logout -->
+        <button class="menu-btn logout-btn" onclick="handleLogout()">🚪 Log Out</button>
+    </div>
+
+    <!-- Load your Firebase config -->
+    <script src="firebase-config.js"></script>
+
+    <script>
+        // Ensure the user is logged in before showing the page
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                // Not logged in, send them back to login page
+                window.location.href = "index.html";
+            } else {
+                // Extract the original USERID from the dummy email (removes @hexinv.com)
+                const displayId = user.email.split('@')[0];
+                document.getElementById('userNameDisplay').textContent = displayId;
+            }
+        });
+
+        function handleLogout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>
